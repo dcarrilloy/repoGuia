@@ -7,7 +7,7 @@ from collections.abc import Callable
 class LoginView(tk.Tk):
     """Interfaz de login que delega la autenticacion al controlador."""
 
-    def __init__(self, on_login: Callable[[str, str], None] | None = None) -> None:
+    def __init__(self, on_login: Callable[[str, str], bool] | None = None) -> None:
         super().__init__()
         self.on_login = on_login
 
@@ -79,9 +79,13 @@ class LoginView(tk.Tk):
             self.status_label.config(text="Falta conectar la accion del controlador.")
             return
 
-        self.status_label.config(text="")
-        self.on_login(username, password)
+        if self.on_login(username, password):
+            self.status_label.config(text="Inicio de sesion correcto.", fg="#176b5b")
+        else:
+            self.status_label.config(text="Usuario o contrasena incorrectos.", fg="#b42318")
 
 
 if __name__ == "__main__":
-    LoginView().mainloop()
+    from controlador.autenticacion import AuthenticationController
+
+    LoginView(on_login=AuthenticationController().authenticate).mainloop()
