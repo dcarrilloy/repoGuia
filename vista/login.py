@@ -12,7 +12,7 @@ class LoginView(tk.Tk):
         self.on_login = on_login
 
         self.title("Iniciar sesion")
-        self.geometry("380x380")
+        self.geometry("380x440")
         self.resizable(False, False)
         self.configure(bg="#f3f5f7")
 
@@ -83,9 +83,3 @@ class LoginView(tk.Tk):
             self.status_label.config(text="Inicio de sesion correcto.", fg="#176b5b")
         else:
             self.status_label.config(text="Usuario o contrasena incorrectos.", fg="#b42318")
-
-
-if __name__ == "__main__":
-    from controlador.autenticacion import AuthenticationController
-
-    LoginView(on_login=AuthenticationController().authenticate).mainloop()
